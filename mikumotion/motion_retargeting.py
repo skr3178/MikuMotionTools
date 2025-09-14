@@ -60,6 +60,7 @@ class MotionRetargeting:
         solver: str = "daqp",
         damping: float = 0.5,
         max_iter: int = 10,
+        enable_viewer: bool = True,
     ):
         self.motion_file = motion_file
         self.robot_xml = robot_xml
@@ -118,13 +119,15 @@ class MotionRetargeting:
         self.model = self.configuration.model
         self.data = self.configuration.data
 
-        self.viewer = mujoco.viewer.launch_passive(
-            model=self.model,
-            data=self.data,
-            show_left_ui=False,
-            show_right_ui=False,
-        )
-        mujoco.mjv_defaultFreeCamera(self.model, self.viewer.cam)
+        self.viewer = None
+        if enable_viewer:
+            self.viewer = mujoco.viewer.launch_passive(
+                model=self.model,
+                data=self.data,
+                show_left_ui=False,
+                show_right_ui=False,
+            )
+            mujoco.mjv_defaultFreeCamera(self.model, self.viewer.cam)
 
         # Initialize to the home keyframe.
         for task in self.tasks:
@@ -219,14 +222,16 @@ class MotionRetargeting:
                 self.target_motion._body_angular_velocities[frame_idx, i, :] = self.data.cvel[body_id][0:3]
 
             # visualize at fixed FPS
-            self.viewer.sync()
+            if self.viewer is not None:
+                self.viewer.sync()
             if realtime:
                 self.rate.sleep()
 
         # compute the velocities
         self.target_motion._dof_velocities[1:] = np.diff(self.target_motion._dof_positions, axis=0) / (1. / self.fps)
 
-        self.viewer.close()
+        if self.viewer is not None:
+            self.viewer.close()
 
         motion_file_out = self.motion_file.replace(".npz", "_retargeted.npz")
         self.target_motion.save(motion_file_out)

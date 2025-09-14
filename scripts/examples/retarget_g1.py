@@ -28,7 +28,7 @@ if __name__ == "__main__":
                     }
                 },
                 "left_rubber_hand": {
-                    "body": "left_hand",
+                    "body": "left_rubber_hand",
                     "weight": {
                         "position": 1.0,
                         "orientation": 1.0,
@@ -39,7 +39,7 @@ if __name__ == "__main__":
                     }
                 },
                 "right_rubber_hand": {
-                    "body": "right_hand",
+                    "body": "right_rubber_hand",
                     "weight": {
                         "position": 1.0,
                         "orientation": 1.0,
@@ -50,7 +50,7 @@ if __name__ == "__main__":
                     }
                 },
                 "left_ankle_roll_link": {
-                    "body": "left_foot",
+                    "body": "left_ankle_roll_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 1.0,
@@ -61,7 +61,7 @@ if __name__ == "__main__":
                     }
                 },
                 "right_ankle_roll_link": {
-                    "body": "right_foot",
+                    "body": "right_ankle_roll_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 1.0,
@@ -72,7 +72,7 @@ if __name__ == "__main__":
                     }
                 },
                 "left_shoulder_roll_link": {
-                    "body": "left_shoulder",
+                    "body": "left_shoulder_roll_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -83,7 +83,7 @@ if __name__ == "__main__":
                     }
                 },
                 "left_elbow_link": {
-                    "body": "left_elbow",
+                    "body": "left_elbow_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                     }
                 },
                 "right_shoulder_roll_link": {
-                    "body": "right_shoulder",
+                    "body": "right_shoulder_roll_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -105,7 +105,7 @@ if __name__ == "__main__":
                     }
                 },
                 "right_elbow_link": {
-                    "body": "right_elbow",
+                    "body": "right_elbow_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -116,7 +116,7 @@ if __name__ == "__main__":
                     }
                 },
                 "left_hip_roll_link": {
-                    "body": "left_hip",
+                    "body": "left_hip_roll_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -127,7 +127,7 @@ if __name__ == "__main__":
                     }
                 },
                 "right_hip_roll_link": {
-                    "body": "right_hip",
+                    "body": "right_hip_roll_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -138,7 +138,7 @@ if __name__ == "__main__":
                     }
                 },
                 "left_knee_link": {
-                    "body": "left_knee",
+                    "body": "left_knee_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -149,7 +149,7 @@ if __name__ == "__main__":
                     }
                 },
                 "right_knee_link": {
-                    "body": "right_knee",
+                    "body": "right_knee_link",
                     "weight": {
                         "position": 1.0,
                         "orientation": 0.0,
@@ -312,6 +312,6 @@ if __name__ == "__main__":
         case _:
             raise ValueError(f"Unsupported robot: {args.robot}")
 
-    retargeting = MotionRetargeting(motion_file, robot_xml, mapping_table)
+    retargeting = MotionRetargeting(motion_file, robot_xml, mapping_table, enable_viewer=args.realtime)
 
     retargeting.run(realtime=args.realtime)

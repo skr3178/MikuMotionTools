@@ -11,7 +11,7 @@ from mikumotion.viewers import MatplotViewer
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--motion", type=str, required=True, help="Motion file")
-parser.add_argument("--robot", type=str, default="smplx", help="Robot name to select which frame to show")
+parser.add_argument("--robot", type=str, default="unitree_g1", help="Robot name to select which frame to show")
 parser.add_argument(
     "--render-scene",
     action="store_true",

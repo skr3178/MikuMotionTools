@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.11'",
@@ -530,6 +530,7 @@ name = "mikumotion"
 version = "2025.7.25"
 source = { editable = "." }
 dependencies = [
+    { name = "loop-rate-limiters" },
     { name = "mink" },
     { name = "mujoco" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
@@ -552,11 +553,12 @@ examples = [
 
 [package.metadata]
 requires-dist = [
+    { name = "loop-rate-limiters", specifier = ">=1.2.0" },
     { name = "loop-rate-limiters", marker = "extra == 'examples'", specifier = ">=0.1.0" },
     { name = "matplotlib", marker = "extra == 'examples'" },
     { name = "mikumotion", extras = ["examples"], marker = "extra == 'all'" },
     { name = "mink" },
-    { name = "mujoco" },
+    { name = "mujoco", specifier = ">=3.0.0" },
     { name = "numpy" },
     { name = "osqp", marker = "extra == 'examples'", specifier = ">=0.6.2,<1" },
     { name = "qpsolvers", extras = ["daqp"], marker = "extra == 'examples'", specifier = ">=4.3.1" },

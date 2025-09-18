@@ -8,8 +8,9 @@ authors = [
 requires-python = ">=3.10"
 dependencies = [
     "numpy",
-    "mujoco",
+    "mujoco>=3.0.0",
     "mink",
+    "loop-rate-limiters>=1.2.0",
 ]
 keywords = ["motion", "mmd", "blender"]
 classifiers = [

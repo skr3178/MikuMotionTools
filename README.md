@@ -267,3 +267,128 @@ Output: Interactive 3D visualization
 
 ## DeepWiki
 https://deepwiki.com/T-K-233/MikuMotionTools
+
+
+# Run the contents of on BlenderScriptingConsole
+
+# Copy and paste this into Blender's Python console
+# Make sure your MMD_Blender.blend file is open first
+```
+import sys
+import os
+import bpy
+
+# Add the mikumotion path
+mikumotion_path = "/Users/skr3178/MikuMotionTools"
+if mikumotion_path not in sys.path:
+    sys.path.append(mikumotion_path)
+
+try:
+    from mikumotion import blender
+    from mikumotion.presets import GenericKeypointMapping
+    from mikumotion.blender import (
+        set_scene_animation_range,
+        build_body_motion_data,
+        set_armature_to_pose,
+    )
+    
+    C = bpy.context
+    D = bpy.data
+    
+    # Check FPS
+    print(f"Current FPS: {C.scene.render.fps}")
+    
+    # Set motion section
+    motion_section = (0, 600)
+    set_scene_animation_range(motion_section[0], motion_section[1])
+    
+    # Get your armature
+    source_armature = D.objects.get("TdaéÆèââπÉ~ÉNÅEÉAÉyÉìÉh Ver1.10")
+    
+    if source_armature is None:
+        print("ERROR: Could not find armature 'TdaéÆèââπÉ~ÉNÅEÉAÉyÉìÉh Ver1.10'")
+        print("Available armature objects:")
+        for obj in D.objects:
+            if obj.type == 'ARMATURE':
+                print(f"  - {obj.name}")
+    else:
+        print(f"Found armature: {source_armature.name}")
+        
+        # Check if armature has data
+        if source_armature.data is None:
+            print("Armature object has no data, trying to find a working armature...")
+            # Try to find another armature object that has data
+            working_armature = None
+            for obj in D.objects:
+                if obj.type == 'ARMATURE' and obj.data is not None:
+                    working_armature = obj
+                    print(f"Found working armature: {obj.name}")
+                    break
+            
+            if working_armature:
+                source_armature = working_armature
+                print(f"Using armature: {source_armature.name}")
+            else:
+                print("ERROR: Could not find any armature with data.")
+                print("Available armature objects:")
+                for obj in D.objects:
+                    if obj.type == 'ARMATURE':
+                        print(f"  - {obj.name} (data: {obj.data is not None})")
+                print("Stopping execution due to missing armature data.")
+                exit()
+        
+        print(f"Armature data: {source_armature.data.name}")
+        
+        # Select and make active
+        bpy.context.view_layer.objects.active = source_armature
+        source_armature.select_set(True)
+        
+        # Switch to Pose mode
+        bpy.ops.object.mode_set(mode='POSE')
+        
+        # Set armature to pose
+        try:
+            set_armature_to_pose(source_armature)
+        except Exception as e:
+            print(f"Warning: Could not set armature to pose: {e}")
+            print("Continuing with current pose...")
+        
+        # Build motion data
+        scaling_ratio = 0.9
+        motion = build_body_motion_data(
+            source_armature, 
+            mapping=GenericKeypointMapping.mmd_yyb, 
+            scaling_ratio=scaling_ratio
+        )
+        
+        # Save motion data
+        save_path = f"/Users/skr3178/MikuMotionTools/data/motions/mmd_motion_{motion_section[0]}_{motion_section[1]}_body_only.npz"
+        motion.save(save_path)
+        print(f"Results saved to {save_path}")
+
+except ImportError as e:
+    print(f"Import error: {e}")
+    print("Make sure the mikumotion package is installed in your Python environment")
+except Exception as e:
+    print(f"Error: {e}")
+    import traceback
+    traceback.print_exc()
+```
+
+
+## Next determine the bone structure of the MMD model
+On python console run contents of 'check_mmd_bones.py'
+
+It suggest that over 200+ bones exists including fingers, etc. However, the key 22/24 bones used for mapping are the ones which are extracted.
+
+The MMD model is very detailed - It has 200+ bones including:
+Detailed finger bones (親指, 人指, 中指, 薬指, 小指)
+Hair bones (髪１-９)
+Eye bones (目.R, 目.L)
+Accessory bones (メガネ, 舌)
+Shadow bones (shadow)
+Dummy bones (dummy)
+
+The system only extracts the 24 standard body parts defined in the mapping, not all 200+ bones. It successfully found and mapped:
+21 unique bones from the mapping
+3 additional body parts (spine2, spine3, left_hand, right_hand) that reuse existing bones

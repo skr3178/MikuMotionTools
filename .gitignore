@@ -205,5 +205,19 @@ __marimo__/
 # Blender projects
 blender-projects/
 
-# Robot description files
-data/robots/
+# Data folder (contains large files and robot assets)
+data/
+
+# MikuMiku Dance assets (large files)
+MikuMiku Dance/
+
+# Screenshots and images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.tga
+
+# Large lock files (optional - uncomment if you want to exclude)
+# uv.lock

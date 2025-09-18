@@ -392,3 +392,7 @@ Dummy bones (dummy)
 The system only extracts the 24 standard body parts defined in the mapping, not all 200+ bones. It successfully found and mapped:
 21 unique bones from the mapping
 3 additional body parts (spine2, spine3, left_hand, right_hand) that reuse existing bones
+
+18th Sept: issue with retargeted mapping. 
+Motion viewer works well
+However, on mujoco the G1 right leg is struck or fixed. 

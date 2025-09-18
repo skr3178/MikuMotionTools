@@ -1,3 +1,17 @@
+
+
+![motion_viewer](motionViewer.gif)
+
+![original](Original.gif)
+
+
+Citations:
+
+1. https://github.com/T-K-233/MikuMotionTools/tree/add-gmr
+2. https://www.nicovideo.jp/watch/sm40971846
+ 
+Motion files and PMX files too are referenced from the above sources. 
+
 # MikuMotionTools
 
 MikuMotionTools contains various functions for converting MMD (MikuMikuDance) motions and other motion file formats into armature motion format that can be used in the Isaac Lab RL training environment.
@@ -396,3 +410,4 @@ The system only extracts the 24 standard body parts defined in the mapping, not 
 18th Sept: issue with retargeted mapping. 
 Motion viewer works well
 However, on mujoco the G1 right leg is struck or fixed. 
+

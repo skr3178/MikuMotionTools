@@ -4,7 +4,7 @@
 
 ![original](Original.gif)
 
-![alt text](motion_recording-ezgif.com-video-to-gif-converter.gif)
+![alt text](motion_retargeted_H1.gif)
 
 <!-- GIF files uploaded to repository -->
 
